@@ -1,0 +1,51 @@
+@page "/register"
+@using System.ComponentModel.DataAnnotations
+@using EventEaseApp
+
+@inject EventStateService EventState
+
+<h3>Event Registration</h3>
+
+@if (!string.IsNullOrEmpty(SuccessMessage))
+{
+    <p>@SuccessMessage</p>
+}
+
+<EditForm Model="@registrationModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>Name: </label>
+        <InputText @bind-Value="registrationModel.Name" />
+    </div>
+
+    <div>
+        <label>Email: </label>
+        <InputText @bind-Value="registrationModel.Email" />
+    </div>
+
+    <button type="submit">Register</button>
+</EditForm>
+
+@code {
+    private RegistrationModel registrationModel = new();
+    private string SuccessMessage = string.Empty;
+
+    private void HandleValidSubmit()
+    {
+        EventState.AddAttendee(registrationModel.Name, registrationModel.Email);
+        SuccessMessage = $"Thank you for registering, {registrationModel.Name}!";
+        registrationModel = new RegistrationModel();
+    }
+
+    public class RegistrationModel
+    {
+        [Required]
+        public string Name { get; set; } = string.Empty;
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = string.Empty;
+    }
+}

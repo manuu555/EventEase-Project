@@ -1,0 +1,37 @@
+@page "/event-card"
+@using System
+
+<PageTitle>Event Card</PageTitle>
+
+<h3>Event Card</h3>
+
+<div>
+    <label>Event Title: </label>
+    <input @bind="EventTitle" />
+</div>
+
+<div>
+    <label>Date: </label>
+    <input type="date" @bind="EventDate" />
+</div>
+
+<div>
+    <label>Location: </label>
+    <input @bind="Location" />
+</div>
+
+<div>
+    <label>Description: </label>
+    <textarea @bind="Description"></textarea>
+</div>
+
+<h4>Preview</h4>
+<p><strong>@EventTitle</strong> on @EventDate.ToShortDateString() at @Location</p>
+<p>@Description</p>
+
+@code {
+    private string EventTitle { get; set; } = string.Empty;
+    private DateTime EventDate { get; set; } = DateTime.Today;
+    private string Location { get; set; } = string.Empty;
+    private string Description { get; set; } = string.Empty;
+}

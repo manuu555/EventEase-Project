@@ -1,0 +1,31 @@
+@page "/attendance"
+
+@inject EventStateService EventState
+
+<h3>Attendance Tracker</h3>
+
+@if (EventState.Attendees == null || EventState.Attendees.Count == 0)
+{
+    <p>No attendees registered yet.</p>
+}
+else
+{
+    <p>Total attendees: @EventState.Attendees.Count</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var attendee in EventState.Attendees)
+            {
+                <tr>
+                    <td>@attendee.Name</td>
+                    <td>@attendee.Email</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
